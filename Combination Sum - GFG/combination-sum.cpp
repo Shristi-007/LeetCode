@@ -12,30 +12,35 @@ class Solution {
   public:
     //Function to return a list of indexes denoting the required 
     //combinations whose sum is equal to given number.
-    void recur(int sum,vector<vector<int>>&ans,vector<int>&curr,int i,vector<int>&A)
-    {
-        if(sum==0)
-        {
-            ans.push_back(curr);
+   void solve(vector<int> &A, int B, vector<vector<int>> &ans, vector<int> &sol,int j){
+        if(B==0){
+            sort(sol.begin(),sol.end());
+            
+            ans.push_back(sol);
+            
             return;
         }
-        if((i<A.size())&&(sum-A[i]>=0))
-        {
-            curr.push_back(A[i]);
-            recur(sum-A[i],ans,curr,i,A);
-            curr.pop_back();
-            i++;
-            recur(sum,ans,curr,i,A); 
-        }
+        
+        
+            if((j<A.size())&&(B-A[j]>=0))
+            {sol.push_back(A[j]);
+            solve(A,B-A[j],ans,sol,j);
+            sol.pop_back();
+            j++;
+            solve(A,B,ans,sol,j);
+            }
+        
         
     }
     vector<vector<int> > combinationSum(vector<int> &A, int B) {
-        sort(A.begin(),A.end());
-        A.erase(unique(A.begin(),A.end()),A.end());
-        vector<int>curr;
-        vector<vector<int>>ans;
-        recur(B,ans,curr,0,A);
-        return ans;
+       vector<vector<int>> ans;
+       vector<int> sol;
+       sort(A.begin(),A.end());
+       A.erase(unique(A.begin(),A.end()),A.end());
+       solve(A,B,ans,sol, 0);
+       
+       sort(ans.begin(), ans.end());
+       return ans;
     }
 };
 
