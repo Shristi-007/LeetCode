@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis1[200005];
+int dis2[200005];
+int vis[200005];
+
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+int sx,sy;
+vector<int> temp;
+vector<vector<int>> vec;
+int ind[200005];
+vector<pair<int,int>> v1[200005];
+
+
+int32_t main(){
+   int n,m;
+   cin>>n>>m;
+   
+   int arr[n];
+   vector<int> v;
+   for(int x=0; x<n; x++){
+       cin>>arr[x];
+       v.push_back(arr[x]);
+   }
+   sort(v.begin(),v.end());
+   
+   while(m--){
+       int r;
+       cin>>r;
+       auto it=upper_bound(v.begin(), v.end(),r);
+       
+       if(it==v.begin()){
+           cout<<"-1"<<endl;
+       }else{
+           it--;
+           cout<<*it<<endl;
+           v.erase(it);
+       }
+   }
+}
+   
+   
