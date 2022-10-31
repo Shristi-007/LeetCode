@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis1[200005];
+int dis2[200005];
+int vis[200005];
+int n,m;
+
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+int sx,sy;
+vector<int> temp;
+vector<vector<int>> vec;
+vector<int> v[200005];
+int ind[200005];
+vector<pair<int,int>> v1[200005];
+
+void dfs(int r){
+    temp.push_back(r);
+    
+    for(auto it:v[r]){
+      
+            dfs(it);
+    }
+}
+
+int32_t main(){
+    cin>>n>>m;
+    for(int x=0; x<m; x++){
+        int p,q;
+        cin>>p>>q;
+        v[p].push_back(q);
+        ind[q]++;
+    }
+    
+    queue<int> q;
+    
+    for(int x=1; x<=n; x++){
+        if(ind[x]==0){
+            q.push(x);
+            
+        }
+        
+    }
+    vector<int> e;
+    int cnt=n;
+    while(!q.empty()){
+        auto it=q.front();
+        q.pop();
+        e.push_back(it);
+        cnt--;
+        for(auto i:v[it]){
+            ind[i]--;
+            if(ind[i]==0) q.push(i);
+        }
+    }
+    
+    
+   
+    if(cnt!=0) cout<<"IMPOSSIBLE"<<endl;
+    else{
+        for(auto it:e) cout<<it<<" ";
+    }
+}
+   
+   
