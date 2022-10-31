@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis[1005][1005];
+int vis[1005][1005];
+char pre[1005][1005];
+int n,m;
+vector<int> v[200005];
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+
+void dfs(int r){
+    for(auto it:v[r]){
+        if(clr[it]==clr[r]) toy=1;
+        else if(clr[it]==0){
+            if(clr[r]=='B') clr[it]='R';
+            else clr[it]='B';
+            dfs(it);
+        }
+    }
+}
+
+int32_t main() {
+   cin>>n>>m;
+   
+   for(int x=0; x<m; x++){
+       int p,q;
+       cin>>p>>q;
+       v[p].push_back(q);
+       v[q].push_back(p);
+   }
+   for(int x=1; x<=n; x++){
+       if(clr[x]==0){
+           clr[x]='B';
+           dfs(x);
+       }
+   }
+   if(toy) cout<<"IMPOSSIBLE";
+   else{
+       for(int x=1; x<=n; x++) {
+           if(clr[x]=='B') cout<<1<<" ";
+           else cout<<2<<" ";
+       }
+   }
+}
