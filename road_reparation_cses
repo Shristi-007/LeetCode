@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis1[200005];
+int dis2[200005];
+int vis[200005];
+int n,m;
+
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+int sx,sy;
+vector<int> temp;
+vector<vector<int>> vec;
+// vector<int> v[200005];
+int ind[200005];
+vector<pair<int,int>> v1[200005];
+
+int find(int r, vector<int> &par){
+    if(par[r]==-1) return r;
+    return par[r]=find(par[r],par);
+}
+
+bool un(int p,int q, vector<int> &par){
+    int i=find(p,par);
+    int j=find(q,par);
+    // cout<<i<<j<<endl;
+    if(i!=j) {
+        // cout<<i<<j<<endl;
+        par[j]=i;
+        return true;
+    }
+    return false;
+}
+
+int32_t main(){
+    
+    cin>>n>>m;
+    vector<int> par(n+1,-1);
+    
+    vector<pair<int,pair<int,int>>> v;
+    for(int x=0; x<m; x++){
+        int p,q,r;
+        cin>>p>>q>>r;
+        v.push_back({r,{p,q}});
+        
+    }
+    sort(v.begin(), v.end());
+    
+    int sum=0;
+    
+    for(int x=0; x<m; x++){
+        if(un(v[x].second.first,v[x].second.second, par)){
+            sum+=v[x].first;
+            
+        }
+    }
+    int t=0;
+    // for(int x=1; x<=n; x++) cout<<par[x]<<" ";
+    for(int x=1; x<=n; x++){
+        if(par[x]==-1) t++;
+    }
+    if(t>1) cout<<"IMPOSSIBLE"<<endl;
+    else cout<<sum<<endl;
+    
+}
+   
+   
