@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis1[200005];
+int dis2[200005];
+int vis[200005];
+int n,m;
+
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+int sx,sy;
+vector<int> temp;
+vector<vector<int>> vec;
+vector<int> v[200005];
+int ind[200005];
+vector<pair<int,int>> v1[200005];
+
+void dfs(int r){
+    vis[r]=1;
+    
+    for(auto it:v[r]){
+        if(!vis[it])
+            dfs(it);
+    }
+}
+
+int32_t main(){
+    
+    cin>>n>>m;
+    int dp[n+1]={},p[n+1]={};
+    for(int x=0; x<m; x++){
+        int p,q;
+        cin>>p>>q;
+        v[p].push_back(q);
+        ind[q]++;
+    }
+    queue<int> q;
+    for(int x=1; x<=n; x++){
+        if(ind[x]==0){
+            q.push(x);
+        }
+    }
+    
+    dfs(1);
+    for(int x=2; x<=n; x++) dp[x]=-1;
+    if(!vis[n]) cout<<"IMPOSSIBLE";
+    else{
+        while(!q.empty()){
+            auto it=q.front();
+            q.pop();
+            
+            for(auto i:v[it]){
+            if(dp[it]!=-1 && dp[i]<dp[it]+1){
+                    dp[i]=dp[it]+1;
+                    p[i]=it;
+                }
+                ind[i]--;
+                if(ind[i]==0) q.push(i);
+            }
+        }
+        // for(int x=1; x<=n; x++) cout<<dp[x]<<endl;
+        int r=dp[n]-dp[1];
+        cout<<r+1<<endl;
+      
+        int er[r+1];
+        int u=n;
+        for(int i=r; i>=0; i--){
+            // cout<<i<<u<<p[n]<<endl;
+            er[i]=u;
+            u=p[u];
+        }
+        
+        for(int x=0; x<=r; x++){
+            cout<<er[x]<<" ";
+        }
+    }
+}
+   
+   
