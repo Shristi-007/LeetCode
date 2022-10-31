@@ -1,0 +1,79 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+int dis[1005][1005];
+int vis[1005][1005];
+char pre[1005][1005];
+int n,m;
+vector<int> v[200005];
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+
+int32_t main() {
+   cin>>m>>n;
+   
+   char arr[m][n];
+   
+   int a,b,c,d;
+   
+   for(int x=0; x<m; x++){
+       for(int y=0; y<n; y++){
+           cin>>arr[x][y];
+           if(arr[x][y]=='A'){
+               a=x;
+               b=y;
+           }
+           if(arr[x][y]=='B'){
+               c=x;
+               d=y;
+           }
+       }
+   }
+   
+   queue<pair<int,int>> q;
+   q.push({a,b});
+   vis[a][b]=1;
+   pre[a][b]=-1;
+   
+   while(!q.empty()){
+       auto it=q.front();
+       q.pop();
+       if(it.first==c && it.second==d) break;
+       
+       for(int x=0; x<4; x++){
+           int s=it.first+rx[x];
+           int t=it.second+ry[x];
+           if(s>=0 && t>=0 && s<m && t<n && !vis[s][t] && (arr[s][t]=='.' || arr[s][t]=='B')){
+               q.push({s,t});
+               vis[s][t]=1;
+            //   cout<<s<<t<<endl;
+               if(x==0) pre[s][t]='R';
+               else if(x==1) pre[s][t]='D';
+               else if(x==2) pre[s][t]='L';
+               else pre[s][t]='U';
+           }
+       }
+   }
+       
+       if(!vis[c][d]) cout<<"NO"<<endl;
+       else{
+           cout<<"YES"<<endl;
+           string s;
+       int cnt=0;
+       while(pre[c][d]!=-1){
+           s+=pre[c][d];
+           char ch=pre[c][d];
+           if(ch=='D') c--;
+           else if(ch=='L') d++;
+           else if(ch=='U') c++;
+           else d--;
+           cnt++;
+           
+       }
+       reverse(s.begin(),s.end());
+       cout<<cnt<<endl<<s<<endl;
+       }
+}
