@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+
+int MOD=1e9+7;
+
+char clr[200005];
+int dis1[200005];
+int dis2[200005];
+int vis[200005];
+int n,m;
+
+int rx[4]={0,1,0,-1};
+int ry[4]={1,0,-1,0};
+int toy=0;
+int sx,sy;
+vector<int> temp;
+vector<vector<int>> vec;
+int ind[200005];
+vector<pair<int,int>> v1[200005];
+
+
+int32_t main(){
+    int n;
+    cin>>n;
+    map<int,int> m;
+    
+    while(n--){
+        int p,q;
+        cin>>p>>q;
+        m[p]++;
+        m[q]--;
+    }
+    
+    int max1=0;
+    int sum=0;
+    
+    for(auto it:m){
+        sum+=it.second;
+        max1=max(max1,sum);
+    }
+    
+    cout<<max1<<endl;
+
+}
+   
+   
